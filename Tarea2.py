@@ -81,20 +81,51 @@ plt.savefig("Rate")
     
 ###ODEs
 
-#1) primero se delcara la función que se va a estudiar en este caso
+#1) primero se delcara la derivada que se va a estudiar en este caso, esta va a retornar la expresión dada en el enunciado
 
-def funcion(y,t):
-    return 2 - np.exp(-4*t)-2*y
-    
-    
+def funcion(y1,t1):
+    return 2 - np.exp(-4*t1)-2*y1
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+#Acá declaro las condiciones iniciales y los arreglos necesarios para poder resolver la ecuacion diferencial
+ini = 0
+final = 1
+puntos = 100
+dy = (final-ini)/puntos
+y= np.zeros(puntos)
+t= np.zeros(puntos)
+
+
+y[0]=1
+t[0]=0
+
+#FInalmente se crea el bucle que va a llenar los arreglos con la solución a la ecuacin diferencial, para esto se debe tomar el metodo de Euler el cual me actualiza la solución de un punto tomando el valor de la derivada en el punto anterior multiplicado por un delta.
+for i in range(1,puntos):
+    t[i]=t[i-1]+dy
+    y[i]=y[i-1]+(dy*funcion(y[i-1],t[i-1]))
+
+plt.figure()
+plt.plot(t,y, color = "green", marker = "o")
+plt.xlabel("$t$")
+plt.ylabel("$y(t)$")
+plt.savefig("SolucionODE")
+
+#solución matemática de la ecuacion diferencial, se usa para hallar el error del método de Euler.
+def fun(y1,t1):
+    return 1+0.5*np.exp(-4*t1)-0.5*np.exp(-2*t1)
+
+plt.figure()
+plt.plot(t,np.abs(fun(t,y)-y)/fun(t,y), marker="o")
+plt.xlabel("$t$", size = 20)
+plt.ylabel("$|y_{\\mathrm{true}}-y_{\\mathrm{ODE}}|$", size = 15)
+plt.savefig("Errores_ODE")
+
+Ak = np.abs(fun(t,y)-y)/fun(t,y)
+mean = np.sum(Ak)/(puntos+1)
+
+print("El promedio de los errores es", mean)
+
+
+
+
+
+
