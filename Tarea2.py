@@ -1,7 +1,7 @@
 import numpy as np
 import time
 import matplotlib.pylab as plt
-
+import random
 #####Primer punto
 
 #1) Funcion de Fibonacci usando recursividad, se tienen las condiciones iniciales que son las primeras dos condicones, es decir que el primer valor de la serie será igual a cero y el segundo valor será 1. En caso de que n sea un numero mayor a estos dos se usa entonces la formula de fibonacci.
@@ -124,6 +124,60 @@ mean = np.sum(Ak)/(puntos+1)
 
 print("El promedio de los errores es", mean)
 
+#h más pequeño
+inic = 0
+final_ = 1
+puntos_ = 250
+d_y = (final_-inic)/puntos_
+y_= np.zeros(puntos_)
+t_= np.zeros(puntos_)
+
+y_[0]=1
+t_[0]=0
+
+for i in range(1,puntos_):
+    t_[i]=t_[i-1]+d_y
+    y_[i]=y_[i-1]+(d_y*funcion(y_[i-1],t_[i-1]))
+
+plt.figure()
+plt.plot(t_,y_, color = "blue", marker = "o")
+plt.xlabel("$t$")
+plt.ylabel("$y(t)$")
+plt.savefig("SolucionODE_hmenor")
+
+plt.figure()
+plt.plot(t_,np.abs(fun(t,y_)-y_)/fun(t_,y_), marker="o")
+plt.xlabel("$t$", size = 20)
+plt.ylabel("$|y_{\\mathrm{true}}-y_{\\mathrm{ODE}}|$", size = 15)
+plt.savefig("Errores_ODE_hmenor")
+
+A_k = np.abs(fun(t,y_)-y_)/fun(t_,y_)
+mean_1 = np.sum(A_k)/(puntos_+1)
+
+print("El promedio de los errores con un h menor es", mean_1)
+
+#El valor del error es un poco menor, lo que quiere decir que si se disminute el h a un valor muy muy pequeño, cercano a cero, el error también va a converger a cero.
+
+#4) Lista de listas
+lista1 = []
+for i in range(4):
+    lista1.append(random.randint(1,6))
+print(lista1)
+lista1 = np.sort(lista1)
+print(lista1)
+lista2 = []
+for i in range(len(lista1)):
+    lista2.append(np.zeros(lista1[i]))
+
+for i in range(len(lista2[0])):
+    lista2[0][i] = lista1[0]
+for i in range(len(lista2[1])):
+    lista2[1][i] = lista1[1]
+for i in range(len(lista2[2])):
+    lista2[2][i] = lista1[2]
+for i in range(len(lista2[3])):
+    lista2[3][i] = lista1[3]
+print(lista2)
 
 
 
