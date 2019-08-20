@@ -107,6 +107,7 @@ plt.figure()
 plt.plot(t,y, color = "green", marker = "o")
 plt.xlabel("$t$")
 plt.ylabel("$y(t)$")
+plt.grid()
 plt.savefig("SolucionODE")
 
 #solución matemática de la ecuacion diferencial, se usa para hallar el error del método de Euler.
@@ -115,8 +116,9 @@ def fun(y1,t1):
 
 plt.figure()
 plt.plot(t,np.abs(fun(t,y)-y)/fun(t,y), marker="o")
-plt.xlabel("$t$", size = 20)
+plt.xlabel("$t$", size = 15)
 plt.ylabel("$|y_{\\mathrm{true}}-y_{\\mathrm{ODE}}|$", size = 15)
+plt.grid()
 plt.savefig("Errores_ODE")
 
 Ak = np.abs(fun(t,y)-y)/fun(t,y)
@@ -143,12 +145,14 @@ plt.figure()
 plt.plot(t_,y_, color = "blue", marker = "o")
 plt.xlabel("$t$")
 plt.ylabel("$y(t)$")
+plt.grid()
 plt.savefig("SolucionODE_hmenor")
 
 plt.figure()
 plt.plot(t_,np.abs(fun(t,y_)-y_)/fun(t_,y_), marker="o")
-plt.xlabel("$t$", size = 20)
+plt.xlabel("$t$", size =15)
 plt.ylabel("$|y_{\\mathrm{true}}-y_{\\mathrm{ODE}}|$", size = 15)
+plt.grid()
 plt.savefig("Errores_ODE_hmenor")
 
 A_k = np.abs(fun(t,y_)-y_)/fun(t_,y_)
